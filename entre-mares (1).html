@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entre Marés</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .answer-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .answer-label {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .answer-text {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s ease;
+        }
+
+        .day-indicator {
+            text-align: center;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .compatibility-score {
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .compatibility-label {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .streak-badge {
+            display: inline-block;
+            background: gold;
+            color: #333;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .surprise-message {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .surprise-message h3 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .surprise-message p {
+            font-size: 16px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .locked-message {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 40px 20px;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Screen -->
+        <div id="login-screen" class="card">
+            <h1>🌊 Entre Marés</h1>
+            <p class="subtitle">Um jogo para nos conhecermos</p>
+            <div class="login-form">
+                <input type="text" id="user-code" placeholder="Digite seu código" maxlength="20">
+                <button onclick="login()">Entrar</button>
+            </div>
+        </div>
+
+        <!-- Main Game Screen -->
+        <div id="game-screen" class="hidden">
+            <div class="card">
+                <h1>🌊 Entre Marés</h1>
+                <div class="day-indicator" id="day-indicator"></div>
+                
+                <div class="stats-container">
+                    <div class="stat-box">
+                        <div class="stat-number" id="my-score">0</div>
+                        <div class="stat-label">Suas respostas</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">
+                            <span class="compatibility-score" id="compatibility">--</span>%
+                        </div>
+                        <div class="stat-label">Sintonia</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="other-score">0</div>
+                        <div class="stat-label">Respostas do outro</div>
+                    </div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="card" id="question-card">
+                <div class="question-number" id="question-number"></div>
+                <div class="question-text" id="question-text"></div>
+                
+                <textarea id="answer-input" rows="6" placeholder="Escreva sua resposta aqui..."></textarea>
+                
+                <div class="navigation">
+                    <button onclick="submitAnswer()">Enviar Resposta</button>
+                </div>
+
+                <div id="other-answer" class="hidden">
+                    <div class="answer-box">
+                        <div class="answer-label">Resposta do outro:</div>
+                        <div class="answer-text" id="other-answer-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card hidden" id="locked-card">
+                <div class="locked-message">
+                    <p>⏰ Novas perguntas serão liberadas amanhã!</p>
+                    <p style="margin-top: 10px; font-size: 14px;">Volte em 24 horas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Database de perguntas (50 perguntas em 10 dias = 5 por dia)
+        const questions = [
+            // DIA 1 - Ligeiras
+            "Qual é sua comida favorita e por quê?",
+            "Se pudesse viajar para qualquer lugar agora, onde seria?",
+            "Qual filme ou série você assistiria mil vezes sem cansar?",
+            "Café ou chá? Como você gosta?",
+            "Qual é seu jeito favorito de passar um domingo?",
+            
+            // DIA 2 - Ligeiras
+            "Qual música te emociona sempre que ouve?",
+            "Praia ou montanha? Por quê?",
+            "Qual foi o melhor presente que você já recebeu?",
+            "Você é de acordar cedo ou dormir tarde?",
+            "Qual seu maior talento ou habilidade?",
+            
+            // DIA 3 - Ligeiras
+            "Qual livro marcou sua vida?",
+            "Se pudesse ter um superpoder, qual seria?",
+            "Qual é sua estação do ano favorita e por quê?",
+            "Você prefere jantar em casa ou num restaurante?",
+            "Qual animal você acha que te representa?",
+            
+            // DIA 4 - Intermediárias
+            "O que te faz sentir mais vivo(a)?",
+            "Qual foi uma decisão difícil que você tomou e não se arrependeu?",
+            "Como você lida com momentos de frustração ou estresse?",
+            "O que seus amigos mais valorizam em você?",
+            "Qual momento da sua vida você gostaria de reviver?",
+            
+            // DIA 5 - Intermediárias
+            "O que significa 'família' para você?",
+            "Qual foi o maior aprendizado que você tirou de um relacionamento passado?",
+            "Você acredita em destino ou que criamos nosso próprio caminho?",
+            "O que te traz paz interior?",
+            "Como você imagina seu dia a dia ideal daqui a 5 anos?",
+            
+            // DIA 6 - Intermediárias
+            "Qual valor você nunca negociaria?",
+            "O que te faz sentir orgulho de si mesmo(a)?",
+            "Como você demonstra amor e carinho?",
+            "Qual foi o maior desafio que você já superou?",
+            "O que você busca em uma parceria de vida?",
+            
+            // DIA 7 - Intermediárias
+            "Como você lida com conflitos numa relação?",
+            "O que te inspira a ser uma pessoa melhor?",
+            "Qual é seu maior sonho ainda não realizado?",
+            "Como você sabe que pode confiar em alguém?",
+            "O que significa 'lar' para você?",
+            
+            // DIA 8 - Profundas
+            "Qual seu maior medo em relação a relacionamentos?",
+            "Como você imagina criar e educar filhos?",
+            "O que você aprendeu sobre si mesmo(a) nos últimos anos?",
+            "Qual é a coisa mais vulnerável que você pode compartilhar sobre si?",
+            "Como você define sucesso na vida?",
+            
+            // DIA 9 - Profundas
+            "O que você não está disposto(a) a aceitar numa relação?",
+            "Como você lida com diferenças de opinião importantes?",
+            "Qual momento da sua vida mudou quem você é hoje?",
+            "O que você precisa de um parceiro(a) nos momentos difíceis?",
+            "Como você imagina dividir responsabilidades numa família?",
+            
+            // DIA 10 - Profundas
+            "Por que você acha que estamos nos conhecendo agora?",
+            "O que te faz acreditar que pode construir algo duradouro com alguém?",
+            "Como você quer ser lembrado(a) pelas pessoas que ama?",
+            "O que você espera encontrar em mim?",
+            "Está pronto(a) para nos conhecermos pessoalmente?"
+        ];
+
+        let currentUser = '';
+        let gameState = {};
+
+        function login() {
+            const code = document.getElementById('user-code').value.trim().toUpperCase();
+            
+            if (code !== 'CAROLINA' && code !== 'NICOLAS') {
+                alert('Código inválido');
+                return;
+            }
+
+            currentUser = code;
+            
+            // Carregar estado do jogo
+            const savedState = localStorage.getItem('entreMares_' + currentUser);
+            if (savedState) {
+                gameState = JSON.parse(savedState);
+            } else {
+                gameState = {
+                    startDate: new Date().toISOString(),
+                    answers: {},
+                    currentQuestion: 0
+                };
+                saveGameState();
+            }
+
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            
+            updateDisplay();
+        }
+
+        function getUnlockedQuestions() {
+            // Obtener respuestas del otro usuario
+            const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
+            const otherState = localStorage.getItem('entreMares_' + otherUser);
+            
+            if (!otherState) return 5; // Primeras 5 desbloqueadas por defecto
+            
+            const otherGameState = JSON.parse(otherState);
+            const myAnswersCount = Object.keys(gameState.answers).length;
+            const otherAnswersCount = Object.keys(otherGameState.answers).length;
+            
+            // Se desbloquean nuevas preguntas cuando AMBOS terminan el bloque actual
+            const minAnswers = Math.min(myAnswersCount, otherAnswersCount);
+            const unlockedBlocks = Math.floor(minAnswers / 5) + 1;
+            
+            return Math.min(unlockedBlocks * 5, questions.length);
+        }
+
+        function calculateCompatibility() {
+            const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
+            const otherState = localStorage.getItem('entreMares_' + otherUser);
+            
+            if (!otherState) return 0;
+            
+            const otherGameState = JSON.parse(otherState);
+            let sharedAnswers = 0;
+            let totalCompared = 0;
+            
+            // Comparar respuestas compartidas
+            for (let i in gameState.answers) {
+                if (otherGameState.answers[i]) {
+                    totalCompared++;
+                    
+                    const myAnswer = gameState.answers[i].toLowerCase();
+                    const otherAnswer = otherGameState.answers[i].toLowerCase();
+                    
+                    // Calcular similitud simple basada en palabras comunes
+                    const myWords = new Set(myAnswer.split(/\s+/).filter(w => w.length > 3));
+                    const otherWords = new Set(otherAnswer.split(/\s+/).filter(w => w.length > 3));
+                    
+                    let commonWords = 0;
+                    myWords.forEach(word => {
+                        if (otherWords.has(word)) commonWords++;
+                    });
+                    
+                    if (commonWords > 0) {
+                        sharedAnswers += commonWords / Math.max(myWords.size, otherWords.size);
+                    }
+                }
+            }
+            
+            if (totalCompared === 0) return 0;
+            
+            // Fórmula de compatibilidad: base 50% + hasta 50% por respuestas
+            const baseScore = 50;
+            const answerScore = (sharedAnswers / totalCompared) * 50;
+            
+            return Math.min(Math.round(baseScore + answerScore), 99); // Max 99% - el 100% se gana en persona ;)
+        }
+
+        function updateStats() {
+            const myAnswersCount = Object.keys(gameState.answers).length;
+            document.getElementById('my-score').textContent = myAnswersCount;
+            
+            const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
+            const otherState = localStorage.getItem('entreMares_' + otherUser);
+            
+            if (otherState) {
+                const otherGameState = JSON.parse(otherState);
+                const otherAnswersCount = Object.keys(otherGameState.answers).length;
+                document.getElementById('other-score').textContent = otherAnswersCount;
+            }
+            
+            const compatibility = calculateCompatibility();
+            if (compatibility > 0) {
+                document.getElementById('compatibility').textContent = compatibility;
+            }
+        }
+
+        function updateDisplay() {
+            const myAnswersCount = Object.keys(gameState.answers).length;
+            const currentDay = Math.floor(myAnswersCount / 5) + 1;
+            const maxUnlocked = getUnlockedQuestions();
+            
+            document.getElementById('day-indicator').textContent = `Bloco ${currentDay} de 10`;
+            
+            // Atualizar barra de progresso
+            const progress = (myAnswersCount / questions.length) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+
+            // Actualizar estadísticas
+            updateStats();
+
+            // Encontrar próxima pergunta no respondida dentro del límite desbloqueado
+            let nextQuestion = -1;
+            for (let i = 0; i < maxUnlocked; i++) {
+                if (!gameState.answers[i]) {
+                    nextQuestion = i;
+                    break;
+                }
+            }
+
+            if (nextQuestion === -1) {
+                // Todas preguntas desbloqueadas respondidas - esperando al otro
+                document.getElementById('question-card').classList.add('hidden');
+                document.getElementById('locked-card').classList.remove('hidden');
+                
+                const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
+                const otherState = localStorage.getItem('entreMares_' + otherUser);
+                
+                if (otherState) {
+                    const otherGameState = JSON.parse(otherState);
+                    const otherAnswersCount = Object.keys(otherGameState.answers).length;
+                    
+                    if (otherAnswersCount < maxUnlocked) {
+                        document.querySelector('.locked-message').innerHTML = 
+                            '<p>⏰ Aguardando a outra pessoa terminar este bloco!</p>' +
+                            '<p style="margin-top: 10px; font-size: 14px;">Novas perguntas serão liberadas quando ambos terminarem</p>';
+                    } else if (maxUnlocked >= questions.length) {
+                        const finalScore = calculateCompatibility();
+                        document.querySelector('.locked-message').innerHTML = 
+                            '<p>🎉 Parabéns! Vocês terminaram todas as perguntas!</p>' +
+                            `<p style="margin-top: 10px; font-size: 24px; font-weight: bold; color: #667eea;">${finalScore}% de sintonia</p>` +
+                            '<p style="margin-top: 10px; font-size: 14px;">Hora de se conhecerem pessoalmente 🌊</p>';
+                    }
+                }
+            } else {
+                document.getElementById('question-card').classList.remove('hidden');
+                document.getElementById('locked-card').classList.add('hidden');
+                
+                gameState.currentQuestion = nextQuestion;
+                displayQuestion(nextQuestion);
+            }
+        }
+
+        function displayQuestion(index) {
+            document.getElementById('question-number').textContent = `Pergunta ${index + 1} de ${questions.length}`;
+            document.getElementById('question-text').textContent = questions[index];
+            
+            const myAnswer = gameState.answers[index];
+            if (myAnswer) {
+                document.getElementById('answer-input').value = myAnswer;
+            } else {
+                document.getElementById('answer-input').value = '';
+            }
+
+            // Verificar se o outro já respondeu
+            const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
+            const otherState = localStorage.getItem('entreMares_' + otherUser);
+            
+            if (otherState && myAnswer) {
+                const otherGameState = JSON.parse(otherState);
+                const otherAnswer = otherGameState.answers[index];
+                
+                if (otherAnswer) {
+                    document.getElementById('other-answer').classList.remove('hidden');
+                    document.getElementById('other-answer-text').textContent = otherAnswer;
+                } else {
+                    document.getElementById('other-answer').classList.add('hidden');
+                }
+            } else {
+                document.getElementById('other-answer').classList.add('hidden');
+            }
+        }
+
+        function submitAnswer() {
+            const answer = document.getElementById('answer-input').value.trim();
+            
+            if (!answer) {
+                alert('Por favor, escreva sua resposta');
+                return;
+            }
+
+            gameState.answers[gameState.currentQuestion] = answer;
+            saveGameState();
+            
+            // Verificar si debemos mostrar mensaje sorpresa
+            showSurpriseIfNeeded(gameState.currentQuestion);
+            
+            updateDisplay();
+        }
+
+        function showSurpriseIfNeeded(questionIndex) {
+            const surprises = {
+                4: {
+                    title: "🌊 Primeira Onda",
+                    message: "Cinco perguntas já... e cada resposta tua me faz querer conhecer mais. Isso está ficando interessante, não acha?"
+                },
+                9: {
+                    title: "💫 Dez Passos",
+                    message: "Estamos no décimo passo dessa jornada. Cada conversa com você parece revelar algo especial. Curiosa para saber aonde isso vai nos levar?"
+                },
+                14: {
+                    title: "🎯 Ponto Médio",
+                    message: "Já estamos na metade do primeiro terço... Sabe quando você sente que está conhecendo alguém de verdade? É assim que me sinto agora."
+                },
+                24: {
+                    title: "🌅 Metade do Caminho",
+                    message: "Vinte e cinco perguntas... E eu aqui pensando que conhecer alguém especial poderia ser exatamente assim: simples, profundo, e cheio de possibilidades."
+                },
+                34: {
+                    title: "🌙 Reta Final",
+                    message: "Faltam menos de vinte perguntas. E cada uma delas me convence mais de que criar esse jogo foi uma das melhores ideias que já tive. Obrigado por jogar comigo."
+                },
+                44: {
+                    title: "⭐ Quase Lá",
+                    message: "Cinco perguntas para o final... Mas sinto que isso é só o começo de algo. Topa descobrir se estou certo quando terminarmos?"
+                },
+                49: {
+                    title: "💝 Última Pergunta",
+                    message: "Chegamos à última. Mas algo me diz que as melhores perguntas e respostas ainda virão... pessoalmente. O que acha de continuarmos essa conversa olhando nos olhos um do outro?"
+                }
+            };
+
+            if (surprises[questionIndex] && currentUser === 'CAROLINA') {
+                const surprise = surprises[questionIndex];
+                
+                setTimeout(() => {
+                    const surpriseDiv = document.createElement('div');
+                    surpriseDiv.className = 'surprise-message';
+                    surpriseDiv.innerHTML = `
+                        <h3>${surprise.title}</h3>
+                        <p>${surprise.message}</p>
+                    `;
+                    
+                    const questionCard = document.getElementById('question-card');
+                    questionCard.insertBefore(surpriseDiv, questionCard.firstChild);
+                    
+                    setTimeout(() => {
+                        surpriseDiv.remove();
+                    }, 8000);
+                }, 500);
+            }
+        }
+
+        function saveGameState() {
+            localStorage.setItem('entreMares_' + currentUser, JSON.stringify(gameState));
+        }
+    </script>
+</body>
+</html>
