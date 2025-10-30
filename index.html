@@ -1033,12 +1033,6 @@
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('game-screen').classList.remove('hidden');
                 
-                // Load saved state if exists (v3 - versión final limpia)
-                const savedState = localStorage.getItem('entreMares_final_' + currentUser);
-                if (savedState) {
-                    gameState = JSON.parse(savedState);
-                }
-                
                 // Set personal names
                 const myName = currentUser === 'CAROLINA' ? 'Caro' : 'Nico';
                 const otherName = currentUser === 'CAROLINA' ? 'Nico' : 'Caro';
@@ -1048,9 +1042,20 @@
                 document.getElementById('my-comparison-name').textContent = myName;
                 document.getElementById('other-comparison-name').textContent = otherName;
                 
-                updateDisplay();
+                // Load from Firebase (priority), fallback to localStorage
+                db.ref('users/' + currentUser).once('value').then((snapshot) => {
+                    if (snapshot.val()) {
+                        gameState = snapshot.val();
+                    } else {
+                        const savedState = localStorage.getItem('entreMares_final_' + currentUser);
+                        if (savedState) {
+                            gameState = JSON.parse(savedState);
+                        }
+                    }
+                    updateDisplay();
+                });
             } else {
-                alert('Código inválido. Tente NICOLAS ou CAROLINA');
+                alert('Código inválido.');
             }
         }
 
