@@ -398,8 +398,6 @@
             font-size: 16px;
         }
     </style>
-    
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
@@ -485,7 +483,7 @@
     </div>
 
     <script>
-        // Firebase Config
+        // Firebase initialization
         const firebaseConfig = {
             apiKey: "AIzaSyB5tsh-p5N51QmLcD1g0_oAHyI0VkHF6u4",
             authDomain: "entre-mares-ad2aa.firebaseapp.com",
@@ -495,7 +493,6 @@
             messagingSenderId: "980348350847",
             appId: "1:980348350847:web:07b5a2470a704f9d93ea4a"
         };
-        
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
         
@@ -1045,16 +1042,21 @@
                 document.getElementById('my-comparison-name').textContent = myName;
                 document.getElementById('other-comparison-name').textContent = otherName;
                 
-                // Load saved state from Firebase
-                firebase.database().ref('users/' + currentUser).once('value', (snapshot) => {
+                // Load from Firebase first, fallback to localStorage
+                database.ref('users/' + currentUser).once('value').then((snapshot) => {
                     if (snapshot.val()) {
                         gameState = snapshot.val();
+                    } else {
+                        // Fallback to localStorage
+                        const savedState = localStorage.getItem('entreMares_final_' + currentUser);
+                        if (savedState) {
+                            gameState = JSON.parse(savedState);
+                        }
                     }
-                    
                     updateDisplay();
                 });
             } else {
-                alert('Código inválido. Tente novamente.');
+                alert('Código inválido.');
             }
         }
 
@@ -1063,7 +1065,7 @@
             const myBlock = Math.floor(myAnswersCount / 5);
             
             const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-            loadOtherUserState((otherState) => {
+            const otherState = localStorage.getItem('entreMares_final_' + otherUser);
             
             if (!otherState) {
                 return Math.min(5, questions.length);
@@ -1079,7 +1081,7 @@
 
         function calculateCompatibility() {
             const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-            loadOtherUserState((otherState) => {
+            const otherState = localStorage.getItem('entreMares_final_' + otherUser);
             
             if (!otherState) return 0;
             
@@ -1108,7 +1110,7 @@
             document.getElementById('my-score').textContent = myAnswersCount;
             
             const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-            loadOtherUserState((otherState) => {
+            const otherState = localStorage.getItem('entreMares_final_' + otherUser);
             
             if (otherState) {
                 const otherGameState = JSON.parse(otherState);
@@ -1147,7 +1149,7 @@
                 document.getElementById('locked-card').classList.remove('hidden');
                 
                 const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-                loadOtherUserState((otherState) => {
+                const otherState = localStorage.getItem('entreMares_final_' + otherUser);
                 
                 if (otherState) {
                     const otherGameState = JSON.parse(otherState);
@@ -1220,7 +1222,7 @@
 
             // Check if both answered
             const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-            loadOtherUserState((otherState) => {
+            const otherState = localStorage.getItem('entreMares_final_' + otherUser);
             
             if (otherState && myAnswer !== undefined) {
                 const otherGameState = JSON.parse(otherState);
@@ -1338,9 +1340,9 @@
 
         function generateFinalComparison() {
             const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-            loadOtherUserState((otherState) => {
+            const otherState = localStorage.getItem('entreMares_final_' + otherUser);
             
-            if (!otherState) { callback(''); return; }
+            if (!otherState) return '';
             
             const otherGameState = JSON.parse(otherState);
             const myName = currentUser === 'CAROLINA' ? 'Caro' : 'Nico';
@@ -1413,14 +1415,10 @@
         }
 
         function saveGameState() {
-            firebase.database().ref('users/' + currentUser).set(gameState);
-        }
-        
-        function loadOtherUserState(callback) {
-            const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-            firebase.database().ref('users/' + otherUser).once('value', (snapshot) => {
-                callback(snapshot.val());
-            });
+            // Save to localStorage (backup)
+            localStorage.setItem('entreMares_final_' + currentUser, JSON.stringify(gameState));
+            // Save to Firebase (sync between devices)
+            database.ref('users/' + currentUser).set(gameState);
         }
     </script>
 </body>
