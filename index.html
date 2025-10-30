@@ -1019,6 +1019,7 @@
         ];
 
         let currentUser = '';
+        let otherUserState = null;
         let gameState = {
             currentQuestion: 0,
             answers: {},
@@ -1054,6 +1055,13 @@
                     }
                     updateDisplay();
                 });
+                
+                // Listen for changes in OTHER user's data in real-time
+                const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
+                db.ref('users/' + otherUser).on('value', (snapshot) => {
+                    otherUserState = snapshot.val();
+                    updateDisplay();
+                });
             } else {
                 alert('Código inválido.');
             }
@@ -1064,13 +1072,13 @@
             const myBlock = Math.floor(myAnswersCount / 5);
             
             const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-            const otherState = localStorage.getItem('entreMares_final_' + otherUser);
+            const otherState = otherUserState;
             
             if (!otherState) {
                 return Math.min(5, questions.length);
             }
             
-            const otherGameState = JSON.parse(otherState);
+            const otherGameState = otherState;
             const otherAnswersCount = Object.keys(otherGameState.answers).length;
             const otherBlock = Math.floor(otherAnswersCount / 5);
             
@@ -1080,11 +1088,11 @@
 
         function calculateCompatibility() {
             const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-            const otherState = localStorage.getItem('entreMares_final_' + otherUser);
+            const otherState = otherUserState;
             
             if (!otherState) return 0;
             
-            const otherGameState = JSON.parse(otherState);
+            const otherGameState = otherState;
             let matches = 0;
             let totalCompared = 0;
             
@@ -1109,10 +1117,10 @@
             document.getElementById('my-score').textContent = myAnswersCount;
             
             const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-            const otherState = localStorage.getItem('entreMares_final_' + otherUser);
+            const otherState = otherUserState;
             
             if (otherState) {
-                const otherGameState = JSON.parse(otherState);
+                const otherGameState = otherState;
                 const otherAnswersCount = Object.keys(otherGameState.answers).length;
                 document.getElementById('other-score').textContent = otherAnswersCount;
             } else {
@@ -1148,10 +1156,10 @@
                 document.getElementById('locked-card').classList.remove('hidden');
                 
                 const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-                const otherState = localStorage.getItem('entreMares_final_' + otherUser);
+                const otherState = otherUserState;
                 
                 if (otherState) {
-                    const otherGameState = JSON.parse(otherState);
+                    const otherGameState = otherState;
                     const otherAnswersCount = Object.keys(otherGameState.answers).length;
                     
                     if (otherAnswersCount < maxUnlocked) {
@@ -1221,10 +1229,10 @@
 
             // Check if both answered
             const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-            const otherState = localStorage.getItem('entreMares_final_' + otherUser);
+            const otherState = otherUserState;
             
             if (otherState && myAnswer !== undefined) {
-                const otherGameState = JSON.parse(otherState);
+                const otherGameState = otherState;
                 const otherAnswer = otherGameState.answers[index];
                 
                 if (otherAnswer !== undefined) {
@@ -1339,11 +1347,11 @@
 
         function generateFinalComparison() {
             const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-            const otherState = localStorage.getItem('entreMares_final_' + otherUser);
+            const otherState = otherUserState;
             
             if (!otherState) return '';
             
-            const otherGameState = JSON.parse(otherState);
+            const otherGameState = otherState;
             const myName = currentUser === 'CAROLINA' ? 'Caro' : 'Nico';
             const otherName = currentUser === 'CAROLINA' ? 'Nico' : 'Caro';
             
