@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entre Marés</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
         * {
             margin: 0;
@@ -398,8 +400,6 @@
             font-size: 16px;
         }
     </style>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
     <div class="container">
@@ -483,7 +483,7 @@
     </div>
 
     <script>
-        // Firebase initialization
+        // Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyB5tsh-p5N51QmLcD1g0_oAHyI0VkHF6u4",
             authDomain: "entre-mares-ad2aa.firebaseapp.com",
@@ -494,7 +494,7 @@
             appId: "1:980348350847:web:07b5a2470a704f9d93ea4a"
         };
         firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+        const db = firebase.database();
         
         const questions = [
             // Bloco 1 - Conhecendo o básico (5 perguntas)
@@ -1033,6 +1033,12 @@
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('game-screen').classList.remove('hidden');
                 
+                // Load saved state if exists (v3 - versión final limpia)
+                const savedState = localStorage.getItem('entreMares_final_' + currentUser);
+                if (savedState) {
+                    gameState = JSON.parse(savedState);
+                }
+                
                 // Set personal names
                 const myName = currentUser === 'CAROLINA' ? 'Caro' : 'Nico';
                 const otherName = currentUser === 'CAROLINA' ? 'Nico' : 'Caro';
@@ -1042,21 +1048,9 @@
                 document.getElementById('my-comparison-name').textContent = myName;
                 document.getElementById('other-comparison-name').textContent = otherName;
                 
-                // Load from Firebase first, fallback to localStorage
-                database.ref('users/' + currentUser).once('value').then((snapshot) => {
-                    if (snapshot.val()) {
-                        gameState = snapshot.val();
-                    } else {
-                        // Fallback to localStorage
-                        const savedState = localStorage.getItem('entreMares_final_' + currentUser);
-                        if (savedState) {
-                            gameState = JSON.parse(savedState);
-                        }
-                    }
-                    updateDisplay();
-                });
+                updateDisplay();
             } else {
-                alert('Código inválido.');
+                alert('Código inválido. Tente NICOLAS ou CAROLINA');
             }
         }
 
@@ -1415,10 +1409,8 @@
         }
 
         function saveGameState() {
-            // Save to localStorage (backup)
             localStorage.setItem('entreMares_final_' + currentUser, JSON.stringify(gameState));
-            // Save to Firebase (sync between devices)
-            database.ref('users/' + currentUser).set(gameState);
+            db.ref('users/' + currentUser).set(gameState);
         }
     </script>
 </body>
