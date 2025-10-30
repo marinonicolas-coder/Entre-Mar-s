@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entre Marés</title>
+    <title>Entre Mares 🌊💙</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
@@ -22,1370 +22,609 @@
         .container {
             max-width: 600px;
             margin: 0 auto;
-        }
-
-        .card {
             background: white;
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            margin-bottom: 20px;
         }
 
         h1 {
-            color: #667eea;
             text-align: center;
-            font-size: 2.5em;
+            color: #667eea;
             margin-bottom: 10px;
+            font-size: 2em;
         }
 
         .subtitle {
             text-align: center;
-            color: #666;
+            color: #888;
             margin-bottom: 30px;
-            font-style: italic;
+            font-size: 0.9em;
         }
 
-        .login-form {
+        .user-select {
             display: flex;
-            flex-direction: column;
-            gap: 20px;
+            gap: 15px;
+            margin-bottom: 30px;
         }
 
-        input[type="text"] {
-            width: 100%;
+        .user-btn {
+            flex: 1;
             padding: 15px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid #667eea;
+            background: white;
             border-radius: 10px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.3s;
+            font-size: 1em;
+            font-weight: bold;
         }
 
-        button:hover {
-            transform: translateY(-2px);
+        .user-btn:hover {
+            background: #f0f4ff;
         }
 
-        button:active {
-            transform: translateY(0);
+        .user-btn.active {
+            background: #667eea;
+            color: white;
         }
 
-        .hidden {
-            display: none;
+        .question-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
         }
 
         .question-number {
             color: #667eea;
-            font-size: 14px;
             font-weight: bold;
             margin-bottom: 10px;
         }
 
         .question-text {
-            font-size: 20px;
-            font-weight: 600;
+            font-size: 1.1em;
             margin-bottom: 20px;
             color: #333;
         }
 
-        .options-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 20px;
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            resize: vertical;
+            font-family: inherit;
         }
 
-        .option-btn {
-            background: white;
-            border: 2px solid #e0e0e0;
-            padding: 15px 20px;
-            border-radius: 12px;
-            text-align: left;
-            font-size: 16px;
-            color: #333;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .option-btn:hover {
+        textarea:focus {
+            outline: none;
             border-color: #667eea;
-            transform: translateX(5px);
         }
 
-        .option-btn.selected {
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border-color: transparent;
-        }
-
-        .option-btn.match {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-            border-color: transparent;
-            animation: pulse 1s ease-in-out;
-        }
-
-        .option-btn.no-match {
-            background: #f8f9fa;
-            color: #999;
-            border-color: #e0e0e0;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .answer-box {
-            background: #f8f9fa;
+            border: none;
             border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .answer-display {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
         }
 
         .answer-label {
             font-weight: bold;
             color: #667eea;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            margin-bottom: 5px;
         }
 
         .answer-text {
             color: #555;
             line-height: 1.6;
-            font-size: 15px;
+            white-space: pre-wrap;
         }
 
-        .match-indicator {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .match-indicator.match {
-            background: #38ef7d;
-            color: white;
-        }
-
-        .match-indicator.different {
-            background: #ffd93d;
-            color: #333;
-        }
-
-        .progress-bar {
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            transition: width 0.5s ease;
-        }
-
-        .day-indicator {
-            text-align: center;
-            color: #667eea;
-            font-weight: bold;
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
-
-        .stats-container {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-            gap: 10px;
-        }
-
-        .stat-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px;
-            border-radius: 15px;
-            text-align: center;
-            flex: 1;
-        }
-
-        .stat-number {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            opacity: 0.9;
-        }
-
-        .compatibility-score {
-            font-size: 48px;
-            font-weight: bold;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .compatibility-label {
-            color: #666;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-
-        .surprise-message {
-            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            margin: 20px 0;
-            animation: fadeIn 0.8s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .surprise-message h3 {
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
-
-        .surprise-message p {
-            font-size: 16px;
-            line-height: 1.6;
+        .locked {
+            opacity: 0.6;
+            pointer-events: none;
         }
 
         .locked-message {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 10px;
             text-align: center;
-            color: #667eea;
-            font-size: 18px;
-            padding: 40px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .emoji-large {
-            font-size: 48px;
+            color: #856404;
             margin-bottom: 20px;
         }
 
-        .submit-btn {
-            margin-top: 20px;
-            width: 100%;
+        .progress {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
         }
 
-        .comparison-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
+        .progress-bar {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            transition: width 0.3s;
         }
 
-        .comparison-box {
-            background: #f8f9fa;
-            border-radius: 12px;
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
             padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .stat-item {
             text-align: center;
         }
 
-        .comparison-box.match {
-            background: linear-gradient(135deg, #11998e15 0%, #38ef7d15 100%);
-            border: 2px solid #38ef7d;
-        }
-
-        .comparison-name {
-            font-size: 12px;
+        .stat-number {
+            font-size: 1.5em;
             font-weight: bold;
             color: #667eea;
-            margin-bottom: 8px;
         }
 
-        .comparison-answer {
-            font-size: 14px;
-            color: #333;
+        .stat-label {
+            font-size: 0.8em;
+            color: #888;
         }
 
-        .final-comparison {
+        .connection-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 8px 15px;
+            background: #28a745;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8em;
+            display: none;
+            z-index: 1000;
+        }
+
+        .connection-status.connected {
+            display: block;
+        }
+
+        .connection-status.disconnected {
+            background: #dc3545;
+            display: block;
+        }
+
+        .comparison-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 15px;
+            padding: 30px;
             margin-top: 30px;
         }
 
-        .block-section {
-            margin-bottom: 30px;
+        .comparison-title {
+            text-align: center;
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 20px;
+            font-weight: bold;
         }
 
-        .block-title {
+        .comparison-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .comparison-question {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .comparison-answers {
+            display: grid;
+            gap: 15px;
+        }
+
+        .comparison-answer {
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .comparison-answer.nicolas {
+            background: #e3f2fd;
+            border-left-color: #2196F3;
+        }
+
+        .comparison-answer.carolina {
+            background: #fce4ec;
+            border-left-color: #E91E63;
+        }
+
+        .comparison-answer-label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #667eea;
+            font-size: 0.9em;
+        }
+
+        .comparison-answer-text {
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .celebration {
+            text-align: center;
+            padding: 30px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-weight: bold;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .celebration h2 {
+            font-size: 2em;
             margin-bottom: 15px;
-            text-align: center;
         }
 
-        .question-row {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            gap: 10px;
-            margin-bottom: 15px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            align-items: center;
-        }
-
-        .question-row.match {
-            background: linear-gradient(135deg, #11998e15 0%, #38ef7d15 100%);
-            border: 2px solid #38ef7d;
-        }
-
-        .answer-column {
-            font-size: 13px;
-            color: #555;
-            padding: 10px;
-            background: white;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .question-column {
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            text-align: center;
-        }
-
-        .question-number-small {
-            font-size: 11px;
-            color: #667eea;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .column-header {
-            font-weight: bold;
-            color: #667eea;
-            text-align: center;
-            padding: 10px;
-            font-size: 16px;
+        .celebration p {
+            font-size: 1.1em;
+            opacity: 0.9;
         }
     </style>
 </head>
 <body>
+    <div class="connection-status" id="connectionStatus">Conectado 🟢</div>
+    
     <div class="container">
-        <!-- Login Screen -->
-        <div id="login-screen" class="card">
-            <h1>🌊 Entre Marés</h1>
-            <p class="subtitle">Uma jornada de 50 perguntas para se conhecerem</p>
-            <div class="login-form">
-                <input type="text" id="access-code" placeholder="Digite seu código de acesso" maxlength="20">
-                <button onclick="login()">Entrar</button>
+        <h1>Entre Mares 🌊💙</h1>
+        <p class="subtitle">50 perguntas para nos conhecermos melhor</p>
+
+        <div class="user-select">
+            <button class="user-btn" onclick="selectUser('NICOLAS')">Nicolás 🇦🇷</button>
+            <button class="user-btn" onclick="selectUser('CAROLINA')">Carolina 🇧🇷</button>
+        </div>
+
+        <div id="statsContainer" style="display: none;">
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="nicolasAnswers">0</div>
+                    <div class="stat-label">Nicolás</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="carolinaAnswers">0</div>
+                    <div class="stat-label">Carolina</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="unlockedCount">0</div>
+                    <div class="stat-label">Desbloqueadas</div>
+                </div>
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
             </div>
         </div>
 
-        <!-- Game Screen -->
-        <div id="game-screen" class="hidden">
-            <!-- Stats Card -->
-            <div class="card">
-                <div class="day-indicator" id="day-indicator">Bloco 1 de 10</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
-                </div>
-                <div class="stats-container">
-                    <div class="stat-box">
-                        <div class="stat-number" id="my-score">0</div>
-                        <div class="stat-label" id="my-name-label">Você</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-number" id="compatibility">0%</div>
-                        <div class="stat-label">% Sintonia</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-number" id="other-score">0</div>
-                        <div class="stat-label" id="other-name-label">Outra pessoa</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Question Card -->
-            <div id="question-card" class="card">
-                <div class="question-number" id="question-number">Pergunta 1 de 50</div>
-                <div class="question-text" id="question-text"></div>
-                
-                <div class="options-container" id="options-container"></div>
-                
-                <button class="submit-btn" id="submit-btn" onclick="submitAnswer()">Enviar Resposta</button>
-
-                <!-- Other person's answer (shown after both answer) -->
-                <div id="other-answer" class="hidden">
-                    <div class="comparison-container">
-                        <div class="comparison-box" id="my-comparison">
-                            <div class="comparison-name" id="my-comparison-name">Você</div>
-                            <div class="comparison-answer" id="my-answer-display"></div>
-                        </div>
-                        <div class="comparison-box" id="other-comparison">
-                            <div class="comparison-name" id="other-comparison-name">Outra pessoa</div>
-                            <div class="comparison-answer" id="other-answer-text"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Locked Card -->
-            <div id="locked-card" class="card hidden">
-                <div class="locked-message">
-                    <div class="emoji-large">⏰</div>
-                    <p>Aguardando a outra pessoa terminar este bloco!</p>
-                    <p style="margin-top: 10px; font-size: 14px;">Novas perguntas serão liberadas quando ambos terminarem</p>
-                </div>
-            </div>
-        </div>
+        <div id="questionsContainer"></div>
+        <div id="comparisonContainer"></div>
     </div>
 
-    <script>
-        const questions = [
-            // Bloco 1 - Conhecendo o básico (5 perguntas)
-            {
-                text: "Numa sexta à noite ideal, você prefere:",
-                options: [
-                    "Jantar tranquilo em casa com boa comida e conversa",
-                    "Restaurante novo e interessante pra explorar",
-                    "Bar/pub animado com amigos",
-                    "Cinema ou show - algo cultural",
-                    "Qualquer coisa, desde que seja com a pessoa certa"
-                ]
-            },
-            {
-                text: "Seu estilo de viajar é mais:",
-                options: [
-                    "Tudo planejado: roteiro, reservas, checklist",
-                    "Meio termo: reservo hotel, resto improviso",
-                    "Mochilão: deixo o vento me levar",
-                    "Luxo e conforto: quero ser bem tratado",
-                    "Não viajo muito, prefiro minha rotina"
-                ]
-            },
-            {
-                text: "Em relação a animais de estimação:",
-                options: [
-                    "Amo! Tenho/quero ter cachorro(s)",
-                    "Amo! Tenho/quero ter gato(s)",
-                    "Gosto, mas sem compromisso (peixe, talvez)",
-                    "Não sou muito fã, mas aceito boa",
-                    "Prefiro minha casa sem pets"
-                ]
-            },
-            {
-                text: "Seu filme/série favorita é do tipo:",
-                options: [
-                    "Comédia - preciso rir pra desligar",
-                    "Drama/Romance - gosto de sentir",
-                    "Ação/Aventura - adrenalina!",
-                    "Sci-fi/Fantasia - adoro viajar",
-                    "Documentário - quero aprender"
-                ]
-            },
-            {
-                text: "Seu nível de organização em casa:",
-                options: [
-                    "Tudo no lugar, Marie Kondo style",
-                    "Organizado, mas não neurótico",
-                    "Bagunça organizada - sei onde está tudo",
-                    "Confesso: meio caos às vezes",
-                    "Organização é relativa, né?"
-                ]
-            },
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, set, onValue, get } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
-            // Bloco 2 - Valores e estilo de vida (5 perguntas)
-            {
-                text: "Domingo de manhã perfeito:",
-                options: [
-                    "Acordar cedo e aproveitar o dia",
-                    "Café da manhã caprichado sem pressa",
-                    "Academia/esporte - manter a rotina",
-                    "Dormir até tarde - merecido!",
-                    "Depende de como foi o sábado 😄"
-                ]
-            },
-            {
-                text: "Sua relação com redes sociais:",
-                options: [
-                    "Ativo, posto bastante",
-                    "Lurker profissional - vejo tudo, posto pouco",
-                    "Uso só pra trabalho/conexões importantes",
-                    "Minimalista digital - mal entro",
-                    "Depende do momento da minha vida"
-                ]
-            },
-            {
-                text: "Pra você, o amor ideal é:",
-                options: [
-                    "Parceria - construir junto, lado a lado",
-                    "Paixão - química e intensidade",
-                    "Amizade profunda que virou amor",
-                    "Complemento - somos diferentes mas encaixamos",
-                    "Mistério - não sei descrever, mas reconheço"
-                ]
-            },
-            {
-                text: "Sua forma de lidar com conflitos:",
-                options: [
-                    "Converso na hora - não deixo acumular",
-                    "Preciso de um tempo pra processar primeiro",
-                    "Evito ao máximo - odeio brigas",
-                    "Depende do assunto e do momento",
-                    "Tento usar humor pra desarmar a tensão"
-                ]
-            },
-            {
-                text: "Seu tipo de humor é:",
-                options: [
-                    "Sarcástico/irônico - nem sempre percebem",
-                    "Inteligente - gosto de trocadilhos/referências",
-                    "Observacional - rio das situações do dia a dia",
-                    "Besteirol mesmo - rir é rir!",
-                    "Depende da companhia"
-                ]
-            },
-
-            // Bloco 3 - Aprofundando (5 perguntas)
-            {
-                text: "Família pra você é:",
-                options: [
-                    "Prioridade absoluta - tudo gira em torno dela",
-                    "Muito importante, mas preciso do meu espaço",
-                    "Amo, mas tem limites saudáveis",
-                    "Complicado... mas estou trabalhando isso",
-                    "Família é quem a gente escolhe também"
-                ]
-            },
-            {
-                text: "Filhos no futuro:",
-                options: [
-                    "Quero muito! É um sonho",
-                    "Sim, se encontrar a pessoa certa",
-                    "Talvez... ainda não decidi",
-                    "Provavelmente não",
-                    "Já tenho / não quero mais"
-                ]
-            },
-            {
-                text: "Sua definição de sucesso:",
-                options: [
-                    "Realização profissional e estabilidade financeira",
-                    "Relacionamentos saudáveis e felicidade",
-                    "Liberdade pra fazer o que quero",
-                    "Equilíbrio entre todas as áreas da vida",
-                    "Ainda descobrindo isso"
-                ]
-            },
-            {
-                text: "Espiritualidade/religião na sua vida:",
-                options: [
-                    "Praticante - parte importante do meu dia a dia",
-                    "Acredito, mas não sou praticante regular",
-                    "Espiritual mas não religioso",
-                    "Agnóstico - não sei, não posso saber",
-                    "Ateu/secular - ciência e razão"
-                ]
-            },
-            {
-                text: "Seu maior medo num relacionamento:",
-                options: [
-                    "Perder minha identidade/independência",
-                    "Não ser suficiente pro outro",
-                    "Ser traído ou decepcionado",
-                    "Repetir erros do passado",
-                    "Não ter medo - vou de coração aberto"
-                ]
-            },
-
-            // Bloco 4 - Compatibilidade prática (5 perguntas)
-            {
-                text: "Sua temperatura ideal:",
-                options: [
-                    "Calor! Verão eterno, por favor",
-                    "Prefiro frio - cobertor e lareira",
-                    "Temperado - nem muito nem pouco",
-                    "Ar condicionado resolve qualquer um",
-                    "Adaptável - cada estação tem seu charme"
-                ]
-            },
-            {
-                text: "Cozinhar pra você:",
-                options: [
-                    "Amo! É minha terapia",
-                    "Faço bem, mas sem exageros",
-                    "Básico pra sobreviver",
-                    "Delivery é uma invenção maravilhosa",
-                    "Topo aprender se tiver companhia"
-                ]
-            },
-            {
-                text: "Seu nível de energia social:",
-                options: [
-                    "Extrovertido total - quanto mais gente melhor",
-                    "Sociável mas preciso recarregar sozinho",
-                    "Prefiro grupos pequenos e íntimos",
-                    "Introvertido assumido - adoro minha paz",
-                    "Ambivalente - depende do dia"
-                ]
-            },
-            {
-                text: "Música na sua vida:",
-                options: [
-                    "Essencial - não vivo sem",
-                    "Gosto muito, escuto bastante",
-                    "Background agradável",
-                    "Prefiro silêncio ou podcasts",
-                    "Bem eclético - de tudo um pouco"
-                ]
-            },
-            {
-                text: "Exercício físico:",
-                options: [
-                    "Rotina sagrada - não pulo",
-                    "Regular - 3-4x semana",
-                    "Quando dá - sem pressão",
-                    "Caminhada conta? 😅",
-                    "Na minha lista pra começar..."
-                ]
-            },
-
-            // Bloco 5 - Intimidade emocional (5 perguntas)
-            {
-                text: "Demonstrar afeto pra mim é:",
-                options: [
-                    "Palavras - preciso ouvir 'te amo'",
-                    "Atos de serviço - ações valem mais",
-                    "Toque físico - carinho, abraços",
-                    "Tempo de qualidade - presença plena",
-                    "Presentes pensados - gesto conta"
-                ]
-            },
-            {
-                text: "Quando estou mal, eu:",
-                options: [
-                    "Preciso falar sobre - compartilhar ajuda",
-                    "Quero companhia silenciosa - só estar junto",
-                    "Preciso ficar sozinho pra processar",
-                    "Tento resolver sozinho antes de pedir ajuda",
-                    "Varia - depende do tipo de problema"
-                ]
-            },
-            {
-                text: "Minha maior qualidade num relacionamento:",
-                options: [
-                    "Lealdade - sou fiel e confiável",
-                    "Comunicação - sei expressar e ouvir",
-                    "Companheirismo - topo tudo junto",
-                    "Paciência - entendo e aceito diferenças",
-                    "Intensidade - quando amo, amo de verdade"
-                ]
-            },
-            {
-                text: "Ciúmes pra mim:",
-                options: [
-                    "Não existe - confiança é tudo",
-                    "Um pouquinho é normal e até saudável",
-                    "Luto contra mas confesso que sinto",
-                    "Depende do contexto - tem limites",
-                    "Prefiro não rotular - cada caso é um caso"
-                ]
-            },
-            {
-                text: "Sobre relacionamentos passados:",
-                options: [
-                    "Aprendi muito - sou grato pela experiência",
-                    "Alguns arrependimentos, mas segui em frente",
-                    "Ainda processando algumas coisas",
-                    "Prefiro não falar muito disso",
-                    "Capítulo fechado - foco é o futuro"
-                ]
-            },
-
-            // Bloco 6 - Futuro e sonhos (5 perguntas)
-            {
-                text: "Daqui a 5 anos você se vê:",
-                options: [
-                    "Casado, construindo família",
-                    "Estabelecido profissionalmente",
-                    "Viajando/explorando o mundo",
-                    "Não faço planos tão longos - fluo",
-                    "Feliz, o resto a gente vê"
-                ]
-            },
-            {
-                text: "Morar junto antes de casar:",
-                options: [
-                    "Essencial - preciso ter certeza",
-                    "Prefiro mas não é obrigatório",
-                    "Tanto faz - não muda nada pra mim",
-                    "Prefiro não - valorizo o tradicional",
-                    "Depende da pessoa e do momento"
-                ]
-            },
-            {
-                text: "Seu maior sonho não realizado:",
-                options: [
-                    "Profissional - quero chegar lá",
-                    "Viajar pra lugares específicos",
-                    "Encontrar meu par ideal",
-                    "Ter/formar família",
-                    "Vários - sou ambicioso!"
-                ]
-            },
-            {
-                text: "Dinheiro e estilo de vida:",
-                options: [
-                    "Ambicioso - quero conquistar muito",
-                    "Confortável - sem luxos nem apertos",
-                    "Minimalista - menos é mais",
-                    "Aproveitar agora - amanhã é incerto",
-                    "Equilibrado - poupar e aproveitar"
-                ]
-            },
-            {
-                text: "Aposentadoria dos sonhos:",
-                options: [
-                    "Praia/campo - sossego total",
-                    "Viajando pelo mundo - bucket list",
-                    "Perto da família e amigos",
-                    "Ainda trabalhando - amo o que faço",
-                    "Sinceramente? Não penso nisso ainda"
-                ]
-            },
-
-            // Bloco 7 - Compatibilidade profunda (5 perguntas)
-            {
-                text: "Pra você, compromisso significa:",
-                options: [
-                    "Exclusividade total - corpo e mente",
-                    "Lealdade e respeito acima de tudo",
-                    "Escolher todo dia estar junto",
-                    "Construir um projeto de vida a dois",
-                    "Liberdade com responsabilidade"
-                ]
-            },
-            {
-                text: "Lidar com diferenças políticas/ideológicas:",
-                options: [
-                    "Preciso de alinhamento - é fundamental",
-                    "Respeito mútuo é suficiente",
-                    "Diferenças enriquecem - desde que conversemos",
-                    "Evito o assunto - não vale a pena brigar",
-                    "Não é tão importante pra mim"
-                ]
-            },
-            {
-                text: "Amizades do sexo oposto no relacionamento:",
-                options: [
-                    "Tranquilo total - confiança é tudo",
-                    "Ok, desde que haja transparência",
-                    "Depende da amizade e do histórico",
-                    "Prefiro evitar - pode complicar",
-                    "Conversamos e estabelecemos limites juntos"
-                ]
-            },
-            {
-                text: "Sua maior insegurança pessoal:",
-                options: [
-                    "Aparência física",
-                    "Não ser interessante o suficiente",
-                    "Meu passado/bagagem",
-                    "Estabilidade financeira/sucesso",
-                    "Vulnerabilidade emocional"
-                ]
-            },
-            {
-                text: "O que você NÃO negocia num relacionamento:",
-                options: [
-                    "Respeito e honestidade",
-                    "Fidelidade",
-                    "Minha independência/espaço",
-                    "Valores fundamentais",
-                    "Cumplicidade e diversão"
-                ]
-            },
-
-            // Bloco 8 - Desafios e crescimento (5 perguntas)
-            {
-                text: "Já fez terapia ou consideraria fazer:",
-                options: [
-                    "Faço e recomendo - mudou minha vida",
-                    "Já fiz - me ajudou muito",
-                    "Consideraria se precisasse",
-                    "Não vejo necessidade pra mim",
-                    "Prefiro resolver sozinho/com amigos"
-                ]
-            },
-            {
-                text: "Sua maior lição dos relacionamentos passados:",
-                options: [
-                    "Comunicação é tudo",
-                    "Não me perder no outro",
-                    "Escolher melhor desde o início",
-                    "Trabalhar minhas questões primeiro",
-                    "Cada pessoa é única - não generalizar"
-                ]
-            },
-            {
-                text: "Quando você erra num relacionamento:",
-                options: [
-                    "Assumo rápido e peço desculpas",
-                    "Preciso processar antes de falar",
-                    "Custa mas reconheço quando estou errado",
-                    "Depende - nem sempre vejo como erro",
-                    "Tento consertar com ações, não só palavras"
-                ]
-            },
-            {
-                text: "Sua maior área de crescimento pessoal:",
-                options: [
-                    "Inteligência emocional",
-                    "Paciência e tolerância",
-                    "Comunicação assertiva",
-                    "Autoestima e amor próprio",
-                    "Equilíbrio trabalho-vida"
-                ]
-            },
-            {
-                text: "Crises fazem parte da vida. Você:",
-                options: [
-                    "Encaro de frente - sou resiliente",
-                    "Preciso de apoio mas consigo passar",
-                    "Me desestabilizo mas me recupero",
-                    "Evito pensar - prefiro focar no positivo",
-                    "Ainda aprendendo a lidar melhor"
-                ]
-            },
-
-            // Bloco 9 - Descobertas e revelações (5 perguntas)
-            {
-                text: "Algo que pouca gente sabe sobre você:",
-                options: [
-                    "Tenho um talento/hobby inusitado",
-                    "Vivi uma experiência transformadora",
-                    "Minha história de vida é diferente do que parece",
-                    "Tenho um sonho 'louco' guardado",
-                    "Sou bem mais sensível do que demonstro"
-                ]
-            },
-            {
-                text: "Pra te conquistar de verdade, precisa:",
-                options: [
-                    "Me fazer rir - humor é fundamental",
-                    "Conversas profundas - conexão intelectual",
-                    "Me surpreender - imprevisibilidade",
-                    "Me sentir seguro - estabilidade emocional",
-                    "Ser autêntico - eu vejo falsidade de longe"
-                ]
-            },
-            {
-                text: "Seu tipo de inteligência mais forte:",
-                options: [
-                    "Lógica/analítica - resolvo problemas",
-                    "Emocional - entendo pessoas",
-                    "Criativa - penso fora da caixa",
-                    "Social - me conecto fácil",
-                    "Prática - faço acontecer"
-                ]
-            },
-            {
-                text: "Se pudesse mudar uma coisa em você:",
-                options: [
-                    "Seria menos ansioso/preocupado",
-                    "Mais confiante/seguro",
-                    "Melhor comunicador",
-                    "Mais paciente",
-                    "Nada - me aceito como sou"
-                ]
-            },
-            {
-                text: "Sua definição de intimidade:",
-                options: [
-                    "Poder ser 100% você mesmo sem medo",
-                    "Conhecer profundamente o outro",
-                    "Cumplicidade silenciosa - entender sem falar",
-                    "Vulnerabilidade compartilhada",
-                    "Tudo isso junto - é complexo"
-                ]
-            },
-
-            // Bloco 10 - Finalizando a jornada (5 perguntas)
-            {
-                text: "O que você procura REALMENTE:",
-                options: [
-                    "Parceiro(a) de vida - construir junto",
-                    "Melhor amigo(a) que virou amor",
-                    "Paixão intensa e verdadeira",
-                    "Companhia pra dividir a vida",
-                    "Ainda descobrindo - mas saberei quando encontrar"
-                ]
-            },
-            {
-                text: "Primeiro encontro ideal seria:",
-                options: [
-                    "Café/drink simples - foco na conversa",
-                    "Caminhada/atividade ao ar livre",
-                    "Jantar caprichado - criar ambiente",
-                    "Algo inusitado - museu, show, experiência",
-                    "Tanto faz - a pessoa importa mais que o lugar"
-                ]
-            },
-            {
-                text: "Red flag absoluta pra você:",
-                options: [
-                    "Desonestidade/falta de transparência",
-                    "Desrespeito (garçons, atendentes...)",
-                    "Falar mal de ex o tempo todo",
-                    "Falta de ambição/acomodação",
-                    "Não saber ouvir/egocentrismo"
-                ]
-            },
-            {
-                text: "Maior qualidade que você traz:",
-                options: [
-                    "Lealdade inabalável",
-                    "Inteligência e boas conversas",
-                    "Cuidado e atenção genuínos",
-                    "Diversão e leveza",
-                    "Profundidade e intensidade"
-                ]
-            },
-            {
-                text: "Depois dessas 50 perguntas, você:",
-                options: [
-                    "Está curioso(a) pra conhecer pessoalmente",
-                    "Animado(a) com a possibilidade",
-                    "Cauteloso(a) mas esperançoso(a)",
-                    "Quer continuar conhecendo antes",
-                    "Vamos descobrir juntos? 😊"
-                ]
-            }
-        ];
-
-        let currentUser = '';
-        let gameState = {
-            currentQuestion: 0,
-            answers: {},
-            matches: 0
+        const firebaseConfig = {
+            apiKey: "AIzaSyB5tsh-p5N51QmLcD1g0_oAHyI0VkHF6u4",
+            authDomain: "entre-mares-ad2aa.firebaseapp.com",
+            databaseURL: "https://entre-mares-ad2aa-default-rtdb.firebaseio.com",
+            projectId: "entre-mares-ad2aa",
+            storageBucket: "entre-mares-ad2aa.firebasestorage.app",
+            messagingSenderId: "980348350847",
+            appId: "1:980348350847:web:07b5a2470a704f9d93ea4a"
         };
 
-        function login() {
-            const code = document.getElementById('access-code').value.trim().toUpperCase();
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        let currentUser = null;
+        const gameRef = ref(database, 'game');
+
+        const questions = [
+            "O que te faz sentir mais vivo/a?",
+            "Se você pudesse jantar com qualquer pessoa (viva ou morta), quem seria?",
+            "Qual é o seu maior medo e por quê?",
+            "Qual música te deixa nostálgico/a?",
+            "Qual foi o melhor conselho que você recebeu?",
+            "O que você gostaria que as pessoas soubessem sobre você?",
+            "Qual é o seu lugar favorito no mundo?",
+            "O que te faz rir sem falta?",
+            "Qual foi o momento mais feliz da sua vida?",
+            "O que você gostaria de aprender ou melhorar sobre si mesmo/a?",
+            "Como você descreve o amor?",
+            "Qual é o seu ritual matinal favorito?",
+            "Qual livro ou filme mudou sua perspectiva de vida?",
+            "Qual é a sua comida reconfortante?",
+            "O que te motiva nos dias difíceis?",
+            "Se você tivesse um superpoder, qual seria?",
+            "Qual é a sua forma favorita de expressar amor?",
+            "Quais valores são mais importantes para você?",
+            "Qual foi o maior risco que você já tomou?",
+            "O que significa família para você?",
+            "Qual é a sua forma ideal de passar um domingo?",
+            "O que te faz sentir grato/a?",
+            "Qual é a sua maior conquista?",
+            "O que você gostaria de fazer antes de morrer?",
+            "Como você lida com conflitos em um relacionamento?",
+            "Do que você precisa quando está triste?",
+            "Qual é a sua definição de sucesso?",
+            "Qual tradição familiar é importante para você?",
+            "Qual é a sua forma favorita de demonstrar carinho?",
+            "O que te faz sentir em casa?",
+            "Qual foi uma lição difícil que você aprendeu?",
+            "Qual sonho você ainda quer realizar?",
+            "Como você relaxa depois de um dia estressante?",
+            "Qual música você escuta quando está feliz?",
+            "Qual é a sua maior insegurança?",
+            "O que significa lealdade para você?",
+            "Qual é a sua lembrança favorita da infância?",
+            "O que te faz sentir mais conectado/a com alguém?",
+            "Como você gostaria de crescer no próximo ano?",
+            "O que te inspira criativamente?",
+            "Qual é a sua ideia de um encontro perfeito?",
+            "O que você espera de um relacionamento amoroso?",
+            "Como você expressa quando algo te incomoda?",
+            "O que você gostaria que as pessoas lembrassem de você?",
+            "Qual é o seu maior ponto forte?",
+            "O que significa compromisso para você?",
+            "Como você lida com mudanças inesperadas?",
+            "O que te faz sentir seguro/a em um relacionamento?",
+            "Qual é a sua forma de celebrar as vitórias?",
+            "O que você está procurando nesta conexão entre nós?"
+        ];
+
+        function initializeGame() {
+            const initialData = {
+                NICOLAS: {},
+                CAROLINA: {}
+            };
             
-            if (code === 'NICOLAS' || code === 'CAROLINA') {
-                currentUser = code;
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('game-screen').classList.remove('hidden');
-                
-                // Load saved state if exists (v3 - versión final limpia)
-                const savedState = localStorage.getItem('entreMares_final_' + currentUser);
-                if (savedState) {
-                    gameState = JSON.parse(savedState);
+            get(gameRef).then((snapshot) => {
+                if (!snapshot.exists()) {
+                    set(gameRef, initialData);
                 }
-                
-                // Set personal names
-                const myName = currentUser === 'CAROLINA' ? 'Caro' : 'Nico';
-                const otherName = currentUser === 'CAROLINA' ? 'Nico' : 'Caro';
-                
-                document.getElementById('my-name-label').textContent = myName;
-                document.getElementById('other-name-label').textContent = otherName;
-                document.getElementById('my-comparison-name').textContent = myName;
-                document.getElementById('other-comparison-name').textContent = otherName;
-                
-                updateDisplay();
+            });
+        }
+
+        const connectedRef = ref(database, '.info/connected');
+        onValue(connectedRef, (snapshot) => {
+            const status = document.getElementById('connectionStatus');
+            if (snapshot.val() === true) {
+                status.textContent = 'Conectado 🟢';
+                status.className = 'connection-status connected';
             } else {
-                alert('Código inválido. Tente NICOLAS ou CAROLINA');
+                status.textContent = 'Desconectado 🔴';
+                status.className = 'connection-status disconnected';
             }
-        }
+        });
 
-        function getUnlockedQuestions() {
-            const myAnswersCount = Object.keys(gameState.answers).length;
-            const myBlock = Math.floor(myAnswersCount / 5);
-            
-            const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-            const otherState = localStorage.getItem('entreMares_final_' + otherUser);
-            
-            if (!otherState) {
-                return Math.min(5, questions.length);
-            }
-            
-            const otherGameState = JSON.parse(otherState);
-            const otherAnswersCount = Object.keys(otherGameState.answers).length;
-            const otherBlock = Math.floor(otherAnswersCount / 5);
-            
-            const minBlock = Math.min(myBlock, otherBlock);
-            return Math.min((minBlock + 1) * 5, questions.length);
-        }
+        window.selectUser = function(user) {
+            currentUser = user;
+            document.querySelectorAll('.user-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('statsContainer').style.display = 'block';
+            loadQuestions();
+        };
 
-        function calculateCompatibility() {
-            const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-            const otherState = localStorage.getItem('entreMares_final_' + otherUser);
-            
-            if (!otherState) return 0;
-            
-            const otherGameState = JSON.parse(otherState);
-            let matches = 0;
-            let totalCompared = 0;
-            
-            for (let i in gameState.answers) {
-                if (otherGameState.answers[i] !== undefined) {
-                    totalCompared++;
-                    if (gameState.answers[i] === otherGameState.answers[i]) {
-                        matches++;
-                    }
-                }
+        onValue(gameRef, (snapshot) => {
+            if (currentUser) {
+                updateStats();
+                renderQuestions();
+                checkCompletion();
             }
-            
-            if (totalCompared === 0) return 0;
-            
-            gameState.matches = matches;
-            
-            return Math.round((matches / totalCompared) * 100);
-        }
+        });
 
         function updateStats() {
-            const myAnswersCount = Object.keys(gameState.answers).length;
-            document.getElementById('my-score').textContent = myAnswersCount;
-            
-            const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-            const otherState = localStorage.getItem('entreMares_final_' + otherUser);
-            
-            if (otherState) {
-                const otherGameState = JSON.parse(otherState);
-                const otherAnswersCount = Object.keys(otherGameState.answers).length;
-                document.getElementById('other-score').textContent = otherAnswersCount;
-            } else {
-                document.getElementById('other-score').textContent = 0;
-            }
-            
-            const compatibility = calculateCompatibility();
-            document.getElementById('compatibility').textContent = compatibility + '%';
+            get(gameRef).then((snapshot) => {
+                const data = snapshot.val() || { NICOLAS: {}, CAROLINA: {} };
+                
+                const nicolasCount = Object.keys(data.NICOLAS || {}).length;
+                const carolinaCount = Object.keys(data.CAROLINA || {}).length;
+                const unlocked = Math.min(nicolasCount, carolinaCount);
+                
+                document.getElementById('nicolasAnswers').textContent = nicolasCount;
+                document.getElementById('carolinaAnswers').textContent = carolinaCount;
+                document.getElementById('unlockedCount').textContent = unlocked;
+                
+                const progress = (unlocked / questions.length) * 100;
+                document.getElementById('progressBar').style.width = progress + '%';
+            });
         }
 
-        function updateDisplay() {
-            const myAnswersCount = Object.keys(gameState.answers).length;
-            const currentDay = Math.floor(myAnswersCount / 5) + 1;
-            const maxUnlocked = getUnlockedQuestions();
-            
-            document.getElementById('day-indicator').textContent = `Bloco ${currentDay} de 10`;
-            
-            const progress = (myAnswersCount / questions.length) * 100;
-            document.getElementById('progress-fill').style.width = progress + '%';
+        function loadQuestions() {
+            renderQuestions();
+        }
 
-            updateStats();
+        function renderQuestions() {
+            get(gameRef).then((snapshot) => {
+                const data = snapshot.val() || { NICOLAS: {}, CAROLINA: {} };
+                const container = document.getElementById('questionsContainer');
+                container.innerHTML = '';
 
-            let nextQuestion = -1;
-            for (let i = 0; i < maxUnlocked; i++) {
-                if (gameState.answers[i] === undefined) {
-                    nextQuestion = i;
-                    break;
-                }
-            }
+                const otherUser = currentUser === 'NICOLAS' ? 'CAROLINA' : 'NICOLAS';
+                const myAnswers = data[currentUser] || {};
+                const theirAnswers = data[otherUser] || {};
 
-            if (nextQuestion === -1) {
-                document.getElementById('question-card').classList.add('hidden');
-                document.getElementById('locked-card').classList.remove('hidden');
-                
-                const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-                const otherState = localStorage.getItem('entreMares_final_' + otherUser);
-                
-                if (otherState) {
-                    const otherGameState = JSON.parse(otherState);
-                    const otherAnswersCount = Object.keys(otherGameState.answers).length;
+                questions.forEach((question, index) => {
+                    const questionNum = index + 1;
+                    const myAnswer = myAnswers[questionNum];
+                    const theirAnswer = theirAnswers[questionNum];
                     
-                    if (otherAnswersCount < maxUnlocked) {
-                        document.querySelector('.locked-message').innerHTML = 
-                            '<div class="emoji-large">⏰</div>' +
-                            '<p>Aguardando a outra pessoa terminar este bloco!</p>' +
-                            '<p style="margin-top: 10px; font-size: 14px;">Novas perguntas serão liberadas quando ambos terminarem</p>';
-                    } else if (maxUnlocked >= questions.length) {
-                        const finalScore = calculateCompatibility();
-                        const matches = gameState.matches;
-                        const finalComparison = generateFinalComparison();
-                        
-                        // Mensajes personalizados según score
-                        let scoreMessage = '';
-                        if (finalScore <= 30) {
-                            scoreMessage = '🎨 Visões diferentes que enriquecem! Divirtam-se explorando suas perspectivas únicas — as melhores conversas vêm das diferenças.';
-                        } else if (finalScore <= 50) {
-                            scoreMessage = '⚖️ Equilíbrio perfeito! Sintonia onde importa, novidade onde emociona. Isso promete conversas incríveis!';
-                        } else if (finalScore <= 70) {
-                            scoreMessage = '✨ Muita sintonia! Vocês têm bastante em comum — e as diferenças tornam tudo mais interessante.';
+                    const prevQuestionNum = questionNum - 1;
+                    const isFirstQuestion = questionNum === 1;
+                    const prevAnsweredByBoth = isFirstQuestion || 
+                        (myAnswers[prevQuestionNum] && theirAnswers[prevQuestionNum]);
+
+                    const card = document.createElement('div');
+                    card.className = 'question-card' + (!prevAnsweredByBoth ? ' locked' : '');
+                    
+                    let html = `
+                        <div class="question-number">Pergunta ${questionNum} de ${questions.length}</div>
+                        <div class="question-text">${question}</div>
+                    `;
+
+                    if (!prevAnsweredByBoth) {
+                        html += `
+                            <div class="locked-message">
+                                🔒 Esta pergunta será desbloqueada quando ambos responderem a anterior
+                            </div>
+                        `;
+                    } else {
+                        if (!myAnswer) {
+                            html += `
+                                <textarea id="answer-${questionNum}" placeholder="Escreva sua resposta aqui..."></textarea>
+                                <button class="btn-submit" onclick="saveAnswer(${questionNum})">Enviar Resposta</button>
+                            `;
                         } else {
-                            scoreMessage = '💫 Conexão impressionante! Quase gêmeos — mas com aquele tempero de diferença que mantém a magia.';
+                            html += `
+                                <div class="answer-display">
+                                    <div class="answer-label">Sua resposta:</div>
+                                    <div class="answer-text">${myAnswer}</div>
+                                </div>
+                            `;
+
+                            if (theirAnswer) {
+                                html += `
+                                    <div class="answer-display" style="margin-top: 10px;">
+                                        <div class="answer-label">Resposta de ${otherUser === 'NICOLAS' ? 'Nicolás' : 'Carolina'}:</div>
+                                        <div class="answer-text">${theirAnswer}</div>
+                                    </div>
+                                `;
+                            } else {
+                                html += `
+                                    <div class="locked-message" style="margin-top: 10px;">
+                                        ⏳ Aguardando resposta de ${otherUser === 'NICOLAS' ? 'Nicolás' : 'Carolina'}...
+                                    </div>
+                                `;
+                            }
                         }
-                        
-                        document.querySelector('.locked-message').innerHTML = 
-                            '<div class="emoji-large">🎉</div>' +
-                            '<p style="font-size: 24px; font-weight: bold;">Parabéns!</p>' +
-                            '<p style="margin-top: 10px;">Vocês terminaram todas as 50 perguntas!</p>' +
-                            `<p style="margin-top: 20px; font-size: 48px; font-weight: bold; color: #667eea;">${finalScore}%</p>` +
-                            `<p style="font-size: 14px; color: #666; margin-top: 5px;">${matches} respostas iguais de 50</p>` +
-                            `<p style="margin-top: 20px; font-size: 15px; color: #555; line-height: 1.6; max-width: 500px; margin-left: auto; margin-right: auto;">${scoreMessage}</p>` +
-                            '<p style="margin-top: 20px; font-size: 16px; font-weight: bold;">Hora de se conhecerem pessoalmente 🌊</p>' +
-                            finalComparison;
                     }
-                }
-            } else {
-                document.getElementById('question-card').classList.remove('hidden');
-                document.getElementById('locked-card').classList.add('hidden');
-                
-                gameState.currentQuestion = nextQuestion;
-                displayQuestion(nextQuestion);
-            }
-        }
 
-        function displayQuestion(index) {
-            const question = questions[index];
-            document.getElementById('question-number').textContent = `Pergunta ${index + 1} de ${questions.length}`;
-            document.getElementById('question-text').textContent = question.text;
-            
-            const optionsContainer = document.getElementById('options-container');
-            optionsContainer.innerHTML = '';
-            
-            const myAnswer = gameState.answers[index];
-            
-            question.options.forEach((option, optIndex) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.textContent = option;
-                btn.onclick = () => selectOption(optIndex);
-                
-                if (myAnswer === optIndex) {
-                    btn.classList.add('selected');
-                }
-                
-                optionsContainer.appendChild(btn);
+                    card.innerHTML = html;
+                    container.appendChild(card);
+                });
+
+                updateStats();
             });
-
-            // Check if both answered
-            const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-            const otherState = localStorage.getItem('entreMares_final_' + otherUser);
-            
-            if (otherState && myAnswer !== undefined) {
-                const otherGameState = JSON.parse(otherState);
-                const otherAnswer = otherGameState.answers[index];
-                
-                if (otherAnswer !== undefined) {
-                    showComparison(index, myAnswer, otherAnswer);
-                } else {
-                    document.getElementById('other-answer').classList.add('hidden');
-                }
-            } else {
-                document.getElementById('other-answer').classList.add('hidden');
-            }
         }
 
-        function selectOption(optionIndex) {
-            const buttons = document.querySelectorAll('.option-btn');
-            buttons.forEach((btn, idx) => {
-                if (idx === optionIndex) {
-                    btn.classList.add('selected');
-                } else {
-                    btn.classList.remove('selected');
+        function checkCompletion() {
+            get(gameRef).then((snapshot) => {
+                const data = snapshot.val() || { NICOLAS: {}, CAROLINA: {} };
+                const nicolasAnswers = data.NICOLAS || {};
+                const carolinaAnswers = data.CAROLINA || {};
+                
+                const nicolasComplete = Object.keys(nicolasAnswers).length === questions.length;
+                const carolinaComplete = Object.keys(carolinaAnswers).length === questions.length;
+                
+                if (nicolasComplete && carolinaComplete) {
+                    showComparison(data);
                 }
             });
-            
-            gameState.answers[gameState.currentQuestion] = optionIndex;
         }
 
-        function submitAnswer() {
-            const currentAnswer = gameState.answers[gameState.currentQuestion];
+        function showComparison(data) {
+            const container = document.getElementById('comparisonContainer');
             
-            if (currentAnswer === undefined) {
-                alert('Por favor, selecione uma opção');
+            let html = `
+                <div class="celebration">
+                    <h2>🎉 Parabéns! 🎉</h2>
+                    <p>Vocês completaram todas as 50 perguntas!</p>
+                    <p>Aqui está a comparação de todas as suas respostas.</p>
+                </div>
+                <div class="comparison-section">
+                    <div class="comparison-title">📊 Comparação Completa das Respostas</div>
+            `;
+
+            questions.forEach((question, index) => {
+                const questionNum = index + 1;
+                const nicolasAnswer = data.NICOLAS[questionNum] || 'Sem resposta';
+                const carolinaAnswer = data.CAROLINA[questionNum] || 'Sem resposta';
+
+                html += `
+                    <div class="comparison-card">
+                        <div class="comparison-question">${questionNum}. ${question}</div>
+                        <div class="comparison-answers">
+                            <div class="comparison-answer nicolas">
+                                <div class="comparison-answer-label">🇦🇷 Nicolás:</div>
+                                <div class="comparison-answer-text">${nicolasAnswer}</div>
+                            </div>
+                            <div class="comparison-answer carolina">
+                                <div class="comparison-answer-label">🇧🇷 Carolina:</div>
+                                <div class="comparison-answer-text">${carolinaAnswer}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        window.saveAnswer = function(questionNum) {
+            const textarea = document.getElementById(`answer-${questionNum}`);
+            const answer = textarea.value.trim();
+
+            if (!answer) {
+                alert('Por favor, escreva uma resposta');
                 return;
             }
 
-            saveGameState();
-            showSurpriseIfNeeded(gameState.currentQuestion);
-            updateDisplay();
-        }
+            const userAnswersRef = ref(database, `game/${currentUser}/${questionNum}`);
+            
+            set(userAnswersRef, answer)
+                .then(() => {
+                    renderQuestions();
+                    checkCompletion();
+                })
+                .catch((error) => {
+                    alert('Erro ao salvar: ' + error.message);
+                });
+        };
 
-        function showComparison(questionIndex, myAnswer, otherAnswer) {
-            const question = questions[questionIndex];
-            const isMatch = myAnswer === otherAnswer;
-            
-            document.getElementById('my-answer-display').textContent = question.options[myAnswer];
-            document.getElementById('other-answer-text').textContent = question.options[otherAnswer];
-            
-            const myBox = document.getElementById('my-comparison');
-            const otherBox = document.getElementById('other-comparison');
-            
-            if (isMatch) {
-                myBox.classList.add('match');
-                otherBox.classList.add('match');
-            } else {
-                myBox.classList.remove('match');
-                otherBox.classList.remove('match');
-            }
-            
-            document.getElementById('other-answer').classList.remove('hidden');
-        }
-
-        function showSurpriseIfNeeded(questionIndex) {
-            const surprises = {
-                4: {
-                    title: "🌊 Primeira Onda",
-                    message: "Cinco perguntas já... e cada resposta tua me faz querer conhecer mais. Isso está ficando interessante, não acha?"
-                },
-                9: {
-                    title: "💫 Dez Passos",
-                    message: "Estamos no décimo passo dessa jornada. Cada conversa com você parece revelar algo especial. Curiosa para saber aonde isso vai nos levar?"
-                },
-                14: {
-                    title: "🎯 Ponto Médio",
-                    message: "Já estamos na metade do primeiro terço... Sabe quando você sente que está conhecendo alguém de verdade? É assim que me sinto agora."
-                },
-                24: {
-                    title: "🌅 Metade do Caminho",
-                    message: "Vinte e cinco perguntas... E eu aqui pensando que conhecer alguém especial poderia ser exatamente assim: simples, profundo, e cheio de possibilidades."
-                },
-                34: {
-                    title: "🌙 Reta Final",
-                    message: "Faltam menos de vinte perguntas. E cada uma delas me convence mais de que criar esse jogo foi uma das melhores ideias que já tive. Obrigado por jogar comigo."
-                },
-                44: {
-                    title: "⭐ Quase Lá",
-                    message: "Cinco perguntas para o final... Mas sinto que isso é só o começo de algo. Topa descobrir se estou certo quando terminarmos?"
-                },
-                49: {
-                    title: "💝 Última Pergunta",
-                    message: "Chegamos à última. Mas algo me diz que as melhores perguntas e respostas ainda virão... pessoalmente. O que acha de continuarmos essa conversa olhando nos olhos um do outro?"
-                }
-            };
-
-            if (surprises[questionIndex] && currentUser === 'CAROLINA') {
-                const surprise = surprises[questionIndex];
-                
-                setTimeout(() => {
-                    const surpriseDiv = document.createElement('div');
-                    surpriseDiv.className = 'surprise-message';
-                    surpriseDiv.innerHTML = `
-                        <h3>${surprise.title}</h3>
-                        <p>${surprise.message}</p>
-                    `;
-                    
-                    const questionCard = document.getElementById('question-card');
-                    questionCard.insertBefore(surpriseDiv, questionCard.firstChild);
-                    
-                    setTimeout(() => {
-                        surpriseDiv.remove();
-                    }, 8000);
-                }, 500);
-            }
-        }
-
-        function generateFinalComparison() {
-            const otherUser = currentUser === 'CAROLINA' ? 'NICOLAS' : 'CAROLINA';
-            const otherState = localStorage.getItem('entreMares_final_' + otherUser);
-            
-            if (!otherState) return '';
-            
-            const otherGameState = JSON.parse(otherState);
-            const myName = currentUser === 'CAROLINA' ? 'Caro' : 'Nico';
-            const otherName = currentUser === 'CAROLINA' ? 'Nico' : 'Caro';
-            
-            const blockTitles = [
-                'Conhecendo o Básico',
-                'Valores e Estilo de Vida',
-                'Aprofundando',
-                'Compatibilidade Prática',
-                'Intimidade Emocional',
-                'Futuro e Sonhos',
-                'Compatibilidade Profunda',
-                'Desafios e Crescimento',
-                'Descobertas e Revelações',
-                'Finalizando a Jornada'
-            ];
-            
-            let html = '<div class="final-comparison">';
-            html += '<h3 style="text-align: center; color: #667eea; margin-bottom: 20px;">Nossa Jornada Completa</h3>';
-            
-            // Headers
-            html += '<div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 10px; margin-bottom: 20px;">';
-            html += `<div class="column-header">${myName}</div>`;
-            html += '<div class="column-header">Pergunta</div>';
-            html += `<div class="column-header">${otherName}</div>`;
-            html += '</div>';
-            
-            // Por cada bloque
-            for (let block = 0; block < 10; block++) {
-                html += '<div class="block-section">';
-                html += `<div class="block-title">Bloco ${block + 1} - ${blockTitles[block]}</div>`;
-                
-                // 5 preguntas por bloque
-                for (let i = 0; i < 5; i++) {
-                    const qIndex = block * 5 + i;
-                    const question = questions[qIndex];
-                    const myAnswer = gameState.answers[qIndex];
-                    const otherAnswer = otherGameState.answers[qIndex];
-                    
-                    const isMatch = myAnswer === otherAnswer;
-                    const rowClass = isMatch ? 'question-row match' : 'question-row';
-                    
-                    html += `<div class="${rowClass}">`;
-                    
-                    // Mi respuesta
-                    html += '<div class="answer-column">';
-                    html += myAnswer !== undefined ? question.options[myAnswer] : '—';
-                    html += '</div>';
-                    
-                    // Pregunta
-                    html += '<div class="question-column">';
-                    html += `<span class="question-number-small">Pergunta ${qIndex + 1}</span>`;
-                    html += question.text;
-                    html += '</div>';
-                    
-                    // Respuesta del otro
-                    html += '<div class="answer-column">';
-                    html += otherAnswer !== undefined ? question.options[otherAnswer] : '—';
-                    html += '</div>';
-                    
-                    html += '</div>';
-                }
-                
-                html += '</div>';
-            }
-            
-            html += '</div>';
-            return html;
-        }
-
-        function saveGameState() {
-            localStorage.setItem('entreMares_final_' + currentUser, JSON.stringify(gameState));
-        }
+        window.addEventListener('load', () => {
+            initializeGame();
+        });
     </script>
 </body>
 </html>
